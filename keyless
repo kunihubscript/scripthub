@@ -23,7 +23,7 @@ gui1.IgnoreGuiInset = true
 gui1.ResetOnSpawn = false
 gui1.Parent = playerGui
 
--- Background
+-- Background (100% visible)
 local cont1 = Instance.new("Frame")
 cont1.Size = UDim2.new(0,420,0,140)
 cont1.Position = UDim2.new(0.5,0,0.5,0)
@@ -33,8 +33,8 @@ cont1.BackgroundTransparency = 1 -- start fully transparent
 Instance.new("UICorner", cont1).CornerRadius = UDim.new(0,14)
 cont1.Parent = gui1
 
--- Fade-in to 95% visible
-TweenService:Create(cont1, TweenInfo.new(1), {BackgroundTransparency = 0.05}):Play()
+-- Fade-in to fully opaque (0.4s)
+TweenService:Create(cont1, TweenInfo.new(0.4), {BackgroundTransparency = 0}):Play()
 
 -- Made By
 local madeBy = Instance.new("TextLabel")
@@ -115,13 +115,13 @@ local function typeText(txt)
 	end
 end
 
--- Animate loading
+-- Animate loading (1:30 min = 90 seconds)
 task.spawn(function()
 	typeText("Generating Script..")
 	for i = 0,100 do
-		barFill:TweenSize(UDim2.new(i/100,0,1,0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.2, true)
+		barFill:TweenSize(UDim2.new(i/100,0,1,0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.891, true)
 		percentText.Text = i.."%"
-		task.wait(0.2)
+		task.wait(0.891)
 	end
 	gui1:Destroy()
 
@@ -137,13 +137,12 @@ task.spawn(function()
 	cont2.Position = UDim2.new(0.5,0,0.5,0)
 	cont2.AnchorPoint = Vector2.new(0.5,0.5)
 	cont2.BackgroundColor3 = Color3.fromRGB(40,40,40)
-	cont2.BackgroundTransparency = 0.05
+	cont2.BackgroundTransparency = 1
 	Instance.new("UICorner", cont2).CornerRadius = UDim.new(0,14)
 	cont2.Parent = gui2
 
-	-- Fade in animation
-	cont2.BackgroundTransparency = 1
-	TweenService:Create(cont2, TweenInfo.new(1), {BackgroundTransparency = 0.05}):Play()
+	-- Fade in to 95% visible (0.4s)
+	TweenService:Create(cont2, TweenInfo.new(0.4), {BackgroundTransparency = 0.05}):Play()
 
 	-- Red FAILED text
 	local errorTitle = Instance.new("TextLabel")
